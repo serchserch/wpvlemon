@@ -1,0 +1,20 @@
+{% extends "QPvBundle::template.html.twig" %}
+
+{% block content %}
+    <h1>Nuevo Impuesto</h1>
+
+    <form action="{{ path('impuesto_create') }}" method="post" {{ form_enctype(form) }}>
+        {{ form_widget(form, {'attr' : {'class' : 'form_new'}}) }}
+        <p>
+            <button class="fsbutton_ok" type="submit"> Ok </button>
+        </p>
+    </form>
+
+        <ul class="record_actions">
+    <li>
+        <a class="fsbutton_cancel" href="{{ path('impuestos_index') }}">
+            Cancelar
+        </a>
+    </li>
+</ul>
+{% endblock %}

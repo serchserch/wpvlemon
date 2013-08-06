@@ -1,0 +1,25 @@
+.records_list{
+    width: 100%;
+    text-align: center;
+    
+}
+.records_list thead tr th:last-child{
+    width: 88px;
+}
+.records_list thead tr th {
+    vertical-align: middle;
+    border-bottom: 2px solid #D3D3D3;
+    font-weight: bold;
+    height: 40px;
+}
+.records_list > tbody > tr{
+    height: 45px;
+}
+.records_list > tbody > tr td{
+    position: relative;
+    vertical-align: middle;
+    border-bottom: 1px solid #D3D3D3;
+}
+.records_list{
+    margin-bottom: 30px;
+}

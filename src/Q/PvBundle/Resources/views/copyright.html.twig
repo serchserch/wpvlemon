@@ -1,0 +1,61 @@
+{#<script type="text/javascript">
+    
+    
+    
+    function acomodafooter(){
+        var bh = $(window).height();
+        var st = $(window).scrollTop();
+        var el = $('#copyright');
+        var eh = el.height();
+        var ew = ($(window).width() / 2)  - (el.width() / 2);
+        var co = $('.content').height();
+        if (st >= (100 + eh) - bh) {
+            
+            el.css({
+                position: 'fixed',
+                left: ew ,
+                bottom: 0
+            });
+            
+            if(co > bh){
+                
+            } else {
+                var tt = bh - eh;
+                $('.content').height(tt);
+                el.css({
+                position: 'fixed',
+                left: ew ,
+            });
+            }
+        }
+        else {
+            el.removeAttr("style");
+        }
+    };
+   
+    $(window).load(function() {
+        acomodafooter();
+    });
+    $(window).resize(function(){
+        acomodafooter();
+    })
+    $(window).scroll(function() {
+        acomodafooter();
+    });
+    </script>
+#}
+<section id="copyright" class="container clearfix">
+    <div class="span12">
+        <p>WPV © 2013</p>
+        <ul class="social">
+            <li class="facebook"><a href="#">facebook</a></li>
+            <li class="twitter"><a href="#">twitter</a></li>
+            <li class="skype"><a href="#">Skype</a></li>
+            <li class="googleplus"><a href="#">googleplus</a></li>
+            <li class="flickr"><a href="#">flickr</a></li>
+            <li class="youtube"><a href="#">youtube</a></li>
+            <li class="rss"><a href="#">rss</a></li>
+            <li class="email"><a href="#">flickr</a></li>
+        </ul>
+    </div>
+</section>

@@ -1,0 +1,13 @@
+{% extends "QPvBundle::template.html.twig" %}
+
+{% block content %}
+
+{% include 'QPvBundle::datepicker.html.twig'%}
+
+<form action="{{ path('u_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form, {'attr' : {'class' : 'form_new'}}) }}
+    <p>
+        <button class="fsbutton_ok" type="submit">Registro</button>
+    </p>
+</form>
+{% endblock %}

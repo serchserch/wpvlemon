@@ -1,0 +1,23 @@
+<section id="header" class="container clearfix">
+    <div class="span12">
+        <nav class="mainNav">
+            <ul>
+                <li class="logo"><a class="page" href="{{path('index_page')}}"><img src="/img/logo2.png" width="83" height="22" alt="Logo"></a></li>
+                <li> <a class="page" href="{{path('services_page')}}">Servicios</a> </li>
+                {#<li> <a class="page" href="">Acerca de </a> </li>#}
+                <li> <a class="page" href="{{path('pricing_page')}}">Precios</a> </li>
+                <li class="last "> <a class="page" href="{{path('contact_page')}}">Contacto</a> </li>
+            </ul>
+            <ul class="fright">
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <li class="homeLink"> <a class="page" href="{{path('panel_index')}}">Panel</a> </li>
+                <li class="homeLink"> <a class="page" href="{{path('u_edit')}}">{{ app.user.username }}</a> </li>
+                <li class="homeLink last"> <a class="page" href="{{path('logout')}}">Salir</a> </li>
+            {% else %}
+                <li class="homeLink"> <a class="page" href="{{path('login')}}">  Ingresa </a> </li>
+                <li class="homeLink last"> <a class="page" href="{{path('u_new')}}">Regístrate</a> </li>
+            {% endif %}
+            </ul>
+        </nav>
+    </div>
+</section>

@@ -1,0 +1,13 @@
+{% block form_errors %}
+    {% if errors|length > 0 %}
+    <ul class="error_list">
+        {% for error in errors %}
+        <li class="error_message" >{{
+            error.messagePluralization is null
+            ? error.messageTemplate|trans(error.messageParameters, 'validators')
+            : error.messageTemplate|transchoice(error.messagePluralization, error.messageParameters, 'validators')
+      }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+{% endblock form_errors %}

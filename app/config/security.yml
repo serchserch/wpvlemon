@@ -1,0 +1,119 @@
+#jms_security_extra:
+#  secure_all_services: false
+#  expressions: true
+#
+#security:
+#  encoders:
+#    Q\PvBundle\Entity\User:
+#      algorithm: sha512
+#      encode-as-base64: true
+#      iterations: 3
+#        #Symfony\Component\Security\Core\User\User: plaintext
+#
+#  role_hierarchy:
+#      ROLE_ADMIN:       ROLE_USER
+#      ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+#
+#  providers:
+#    user_db:
+#      entity: { class: Q\PvBundle\Entity\User, property: username}
+##      in_memory:
+##          memory:
+##              users:
+##                  user:  { password: userpass, roles: [ 'ROLE_USER' ] }
+##                  admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
+#
+#  firewalls:
+#      dev:
+#          pattern:  ^/(_(profiler|wdt)|css|images|js)/
+#          security: false
+#
+#      login:
+#          pattern:  ^/admin/secured/login$
+#          security: false
+#
+#      secured_area:
+#          pattern:    ^/demo/secured/
+#          form_login:
+#              check_path: _security_check
+#              login_path: _demo_login
+#          logout:
+#              path:   _demo_logout
+#              target: _demo
+#          #anonymous: ~
+#          #http_basic:
+#          #    realm: "Secured Demo Area"
+#
+#  access_control:
+#        #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+
+
+security:
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+#       ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+    encoders:
+      Q\PvBundle\Entity\User:
+        algorithm:        sha512
+        encode_as_base64: true
+        iterations:       3
+
+    providers:
+        user_db:
+            entity: { class: QPvBundle:User , property: username }
+
+# El firewall controla el login de la página, quién está logueado
+# y quien no.
+    firewalls:
+      
+      
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+         # Para acceder a una determinada ruta sin pasar 
+         # por el control de acceso
+#        login:
+#            pattern:  ^/admin/login$
+#            security: false
+
+
+
+        
+        secured_area:
+            # El área seguga es toda la página.  Alguien puede o no
+            # estar logueado 
+            pattern:    ^/
+            anonymous: ~
+            
+            # Mostramos el formulario de Acceso en caso de que se requiera
+            # un control de acceso
+            
+            # Mostramos el login, la función comprueba si está loggeado
+            # el usuario o no
+            form_login:
+                login_path: /security/login
+                check_path: /security/login_check
+                always_use_default_target_path: true
+                default_target_path: /panel
+                
+            # Logout , termina la sessión del usuario. y nos redirige a "target"
+            logout:
+                path: /security/logout
+                target: /
+            
+            remember_me:
+                key:      "9e3706a39c21027bdad79acc25a4d31c3deb3501"
+                name: GalletaDeLimon
+                lifetime: 30
+                secure: false
+                #always_remember_me: false
+                
+                
+                
+    # verifica que las rutas a accesar tengan los permisos necesarios
+    access_control:
+      #la ruta "/admin", tiene que tener el rol del ROLE_ADMIN
+      #- { path: ^/admin, roles: ROLE_ADMIN }
+      
+      

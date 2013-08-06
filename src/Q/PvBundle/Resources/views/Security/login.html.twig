@@ -1,0 +1,32 @@
+{% extends "QPvBundle::template.html.twig" %}
+
+{% block content %}
+
+
+
+<section class="content container clearfix">
+    <div class="contactform">
+        <div class="span8">
+            <form id="contact-form" accept-charset="utf-8" action="{{ path('login_check') }}" method="post">
+                
+                {% if error %}
+                <div class="error_message">Usuario o contraseña no válidos</div>
+                {% endif %}
+                <fieldset>
+                    <div class="">
+                        <p>
+                            <input class="w237 MR10" name="_username" id="username" type="text" value="{{ last_username }}" placeholder="usuario">
+                        </p>
+                        <p>
+                            <input class="w237"  name="_password" id="email" type="password" value="" placeholder="contraseña">
+                        </p>
+                    </div>
+                </fieldset>
+                <div class="submitCont">
+                    <input type="submit" value="Enviar" class="button medium color">
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

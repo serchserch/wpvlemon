@@ -1,0 +1,171 @@
+{% extends "QPvBundle::template.html.twig" %}
+
+{# Posibles errores de los usuarios #}
+{% set no_tienda = 'Todavía no puedes hacer esto. Necesitas crear al menos una tienda.'%}
+{% set no_impuestos = 'Todavía no puedes hacer esto. Necesitas crear al menos un impuesto.'%}
+{% block content %}
+
+{% include 'QPvBundle::fancybox.html.twig'%}
+
+    <section id="header" class="container clearfix">
+        <div class="span12">
+            <nav class="mainNav">
+                <ul>
+
+                {% if impuestos and 
+                      productos and 
+                      almacenes and 
+                      tiendas 
+                %}
+                    <li><a class="page fancybox" href="#tiendas_pos" title="Tiendas disponibles" >Punto de Venta</a></li>
+
+                    <li><a class="page" href="{{path('reportes_index')}}">Informes</a> </li>
+                {% endif %}
+
+
+
+
+                {% if productos%}
+                        <li><a class="page" href="{{path('productos')}}">Productos</a></li>
+                {% endif %}
+
+
+                {#
+                <li><a class="page" href="{{path('proveedor_index')}}">Mis proveedores</a> </li>
+                <li><a class="page" href="{{path('empleado_index')}}">Empleados</a></li>
+                #}
+
+                {%if almacenes %}
+                            <li><a class="page" href="{{path('almacen_index')}}">Mis alamacenes</a></li> 
+                {% endif %}
+
+
+                {% if impuestos %}
+                                <li><a class="page" href="{{path('impuestos_index')}}">Impuestos</a> </li>
+                {% endif %}
+
+
+                {% if tiendas%}
+                                    <li><a class="page" href="{{path('tiendas_index')}}">Mis Tiendas</a></li>
+                {% endif %}
+
+                                    </ul>
+                                </nav>
+                            </div>
+                        </section>
+
+
+{% if not impuestos or 
+      not productos or 
+      not almacenes or 
+      not tiendas 
+%}
+                        <section class="content dark container clearfix">
+                            <div class="span9">
+                                <h2>Primero, lo primero</h2>
+                                <p>Tendrás que completar estos pasos para poner a funcionar tu tienda: </p>
+                            </div>
+
+                        </section>
+
+                        <section class="content dark container clearfix">
+
+
+    {% if not tiendas %}
+                            <div class="purchase">
+                                <div class="span9">
+                                    <h2>Tiendas (paso 1)</h2>
+                                    <p>
+                                        Agrega la tienda en donde vaz a vender. Y las cajas o terminales
+                                    </p>
+                                </div>
+                                <div class="span3 alpha"> <a href="{{path('tienda_new')}}" class="button medium color">Agrega Tiendas</a> </div>
+                            </div>
+    {% endif %}
+
+    {% if not impuestos %}
+                            <div class="purchase">
+                                <div class="span9">
+                                    <h2>Impuestos  (paso 2)</h2>
+                                    <p>
+                                        Agrega los impuestos que tendrán tus productos o servicios.
+                                        ( generalmente solo es el i.v.a. ) 
+                                        <br/><br/>
+                                        Recuerda que algúnos servicios y/o productos están exentos de impuestos, consulta a un contador.
+                                    </p>
+                                </div>
+                                <div class="span3 alpha"> <a href="{{path('impuesto_new')}}" class="button medium color">Agrega Impuestos</a> </div>
+                            </div>
+    {% endif %}
+
+    {% if not almacenes %}
+                            <div class="purchase">
+                                <div class="span9">
+                                    <h2>Almacenes</h2>
+                                    <p>
+                                        Agrega los alamacenes que vaz a ocupar en tu tienda o tiendas.
+                                        <br/><br/>
+                                        <strong style="color: #18b7f1">Tip: </strong> Puedes tener dos tiendas con el mismo almacén  o  
+                                        puedes poner dos almacenes en la misma tienda o puedes tener muchas tiendas con muchos almacenes, etc.  No hay limitaciones. :)
+                                        <br/><br/>
+                                        {#<strong style="color: #18b7f1">Los Servicios no necesitan un almacen. </strong>(Si lo necesitas , puedes crear un almacen en cualquier momento)#}
+                                    </p>
+                                </div>
+                                <div class="span3 alpha">{% if tiendas %}<a href="{{path('panel_almacen_new')}}" class="button medium color">Agrega Almacenes</a>{% else %}<a href="#" onclick="alert('{{no_tienda}}');" class="button medium color">Agrega Almacenes</a>{% endif %}</div>
+                            </div>
+    {% endif %}
+
+    {% if not productos%}
+                            <div class="purchase">
+                                <div class="span9">
+                                    <h2>Productos</h2>
+                                    <p>
+                                        Agrega los productos que vaz a vender. 
+                                    </p>
+                                </div>
+                                <div class="span3 alpha"><a {% if impuestos %}href="{{path('productos')}}" {% else %} href="#" onclick="alert('{{no_impuestos}}');"{% endif %} class="button medium color">Agrega Productos</a></div>
+                            </div>
+    {% endif %}
+
+
+
+
+                        </section>
+{% else %}
+
+                        <section class="content dark container clearfix">
+                            <div class="span9">
+                                <h2>Ya puedes empezar a vender</h2>
+                                <p>Todo lo puedes administrar en el menú de la parte superior</p>
+                                <p>Te recomendamos que leas la documantación que puedes descargar <a href="#">->aquí<-</a></p>
+                            </div>
+
+                        </section>
+
+                        <section class="content dark container clearfix">
+                            <div class="purchase">
+                                <div class="span9">
+                                    <h2> Punto De Venta. </h2>
+                                    <p>
+                                        Empieza a vender
+                                    </p>
+                                </div>  
+                                <div class="span3 alpha"> <a href="#tiendas_pos" title="Tiendas disponibles" class="button medium color fancybox"> Acceder </a></div>
+                            </div>
+                        </section>
+
+                        <div id="tiendas_pos" style="width:500px;display: none;">
+                            <p>
+                                Estas en :
+                            </p>
+
+    {% for t in tiendas%}
+                            <a href="{{path('pos_index',{'id_tienda': t.id })}}">{{t.nombre}}</a>
+                            <br /><br />
+    {% endfor %}
+
+
+                        </div>
+
+{% endif %}
+{% endblock %}

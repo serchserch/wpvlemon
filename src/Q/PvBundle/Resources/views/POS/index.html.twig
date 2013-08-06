@@ -1,0 +1,467 @@
+{% extends "QPvBundle::template.html.twig" %}
+
+{% block content %}
+<div id="punto_de_venta">
+    <style type="text/css">
+            form div{
+                margin-top: 50px;
+                float: left;
+            }
+            .img{
+                margin-top: 5px;
+                width:100px; /* you can use % */
+                height: auto;
+            }
+            .cantidad{
+                text-align: center !important;
+                vertical-align: middle !important;
+                width: 50px;
+            }
+            .qt{
+                text-align: center !important;
+                width: 50px !important;
+            }
+            .precio_total{
+                color: #205f82;
+                font-weight: bold;
+                font-size: large;
+            }
+            #punto_de_venta{
+                padding: 20px;
+            }
+            .qery, .id, .sku, .barcode, .precio_mayoreo, .cantidad_mayoreo{
+                display: none;
+            }
+            #tabla_productos{
+                width: 100%;
+                text-align: center;
+
+            }
+            .pos{
+                width: 100px !important;
+                margin-left: 10px;
+            }
+            tr{
+                border-bottom: 1px solid #D3D3D3;
+            }
+            td .ides, th .ides{
+                display: none;
+            }
+            td{
+                vertical-align: middle;
+                text-align: center;
+            }
+            .totales{
+                font-weight: bolder;
+            }
+            td input{
+                margin-left: 10px;
+            }
+            #codigo{width: 400px;
+            }
+            .total_venta{
+                color: #205f82;
+                margin-top: 30px;
+                font-weight: bold;
+                font-size: large;
+                width: 250px;
+                height: 40px;
+                float: left;
+                display: block;
+            }
+            #gran_total{float: right;
+            }
+
+            .fsbutton_ok{
+                float: right;
+            }
+        </style>
+
+        <script type="text/javascript" >
+
+
+            /**
+             * Redondeamos la cifra a dos decimale
+             * 
+             */
+            function redondeo2decimales(numero) {
+                var original = parseFloat(numero);
+                var result = Math.round(original * 100.0) / 100;
+                return result;
+            }
+
+            /**
+             * Obtenemos el gran total de la venta
+             * 
+             */
+            function gran_total() {
+                var suma_total = 0;
+                $('.precio_total').each(function() {
+                    suma_total += Number($(this).text());
+                });
+                $('#gran_total').html('$  ' + redondeo2decimales(suma_total));
+
+            }
+
+
+
+
+            /**
+             * Verificamos que escriba solo números
+             * @param string num
+             * @param object aidi
+             * @returns {Boolean}
+             */
+            function valNum(string, aidi) {
+
+
+                var x = ".0123456789";
+                var y = true;
+                var z = "";
+                for (i = 0; i < string.length; i++) {
+                    var ch = string.charAt(i);
+                    for (j = 0; j < x.length; j++)
+                        if (ch == x.charAt(j))
+                            break;
+
+                    if (j == x.length) {
+                        y = false;
+                        break;
+                    }
+                    z += ch;
+                }
+
+                if (!y) {
+
+                    $("#" + aidi).text("1");
+                    return (false);
+                }
+            }
+
+
+
+            /**
+             * Pasamos el objeto que JSON para crear una nueva fila
+             * dentro de la tabla ya establecida.
+             * 
+             * @param {type} obj
+             * @returns {undefined}
+             */
+            function prod(obj)
+            {
+
+
+                $('#productos_compra').append('<tr id="fila_' + obj.qery + '">');
+
+                $('#fila_' + obj.qery).append('<td class="qery"             id="qery_' + obj.qery + '"              >' + obj.qery + '</td>');
+                $('#fila_' + obj.qery).append('<td class="id"               id="id_' + obj.qery + '"                >' + obj.id + '</td>');
+                $('#fila_' + obj.qery).append('<td class="sku"              id="sku_' + obj.qery + '"               >' + obj.sku + '</td>');
+                $('#fila_' + obj.qery).append('<td class="barcode"          id="barcode_' + obj.qery + '"           >' + obj.barcode + '</td>');
+                $('#fila_' + obj.qery).append('<td class="precio_mayoreo"   id="precio_mayoreo_' + obj.qery + '"    >' + obj.preciomayoreo + '</td>');
+                $('#fila_' + obj.qery).append('<td class="cantidad_mayoreo" id="cantidad_mayoreo_' + obj.qery + '"  >' + obj.cantidadmayoreo + '</td>');
+
+                // Sin imagen
+
+                $('#fila_' + obj.qery).append('<td class="c_img"            id="img_' + obj.qery + '"            ><img class="img" src="/i/' + obj.imagen + '"/></td>');
+
+                //$('#fila_' + obj.qery).append('<td class="c_img"            id="img_' + obj.qery + '"            ><img class="img" src="/i/' + obj.imagen + '"/></td>');
+
+                $('#fila_' + obj.qery).append('<td class="nombre"           id="nombre_' + obj.qery + '"            >' + obj.nombre + '</td>');
+                $('#fila_' + obj.qery).append('<td class="cantidad"         id="cantidad_' + obj.qery + '"          ><input  id="qt_' + obj.qery + '" class="qt" type="text" name="cantidad_' + obj.qery + '" value="1" onblur="vacio(this , \'' + obj.qery + '\')" onkeyup="suma(\'' + obj.qery + '\');" /></td>');
+                $('#fila_' + obj.qery).append('<td class="precio_unitario"  id="precio_unitario_' + obj.qery + '"   >' + obj.precioventa + '</td>');
+                $('#fila_' + obj.qery).append('<td class="precio_total"     id="precio_total_' + obj.qery + '"      >' + obj.precioventa + '</td>');
+                $('#fila_' + obj.qery).append('<td id="borrar" ><input type="button" onclick="qpdl(\'fila_' + obj.qery + '\');" value="X" /></td>');
+                // recalculamos el gran total 
+
+                gran_total();
+                x = 0;  //coordenadas horizontales
+                y = document.height; //coordenadas verticales
+                // hacemos scroll a la página conforme va creciendo
+                // para desplazarla hasta abajo
+                window.scrollTo(x, y);
+                window.scroll(x, y);
+            }
+
+
+
+
+
+
+            /**
+             * Conectamos con el servidor para pedirle el artículo,
+             * si el articulo ya estaba en la lista previamente
+             * solo se suma un articulo a la cantidad que tenía previamente
+             * dicho artículo
+             */
+            function accion()
+            {
+                // obtenemos el código del artículo
+                // para pedirselo al servidor
+                var qery = $('#codigo').val();
+
+                // si el código ya existe en la tabla solo se agrega una
+                // unidad a la cantidad y se calcula el total del artículo
+                if ($('#qt_' + qery).length) {
+
+                    var cantidad = parseFloat($('#qt_' + qery).val()) + 1;
+                    $('#qt_' + qery).val(cantidad);
+                    suma(qery);
+                    //Borramos el código para un nuevo valor
+                    $('#codigo').val('');
+                } else {
+                    var parametros = {
+                        'query': $('#codigo').val()
+                    };
+
+                    $.ajax({
+                        data: parametros,
+                        url: '{{path('producto_info')}}',
+                        type: 'POST',
+                        //timeout: 200,
+                        beforeSend: function() {
+                            $("#codigo").val("Procesando, espere por favor...");
+
+                        },
+                        success: function(response) {
+                            // los artículos nos lo regresa en formato JSON,
+                            // procedemos a convertirlo en un objeto
+                            var json = response;
+                            obj = JSON.parse(json);
+
+                            if (obj.error == true)
+                            {
+                                // si no existe el artículo creamos un alert
+                                alert('No existe tal artículo ');
+                                $('#codigo').val('');
+                            }
+                            else
+                            {
+                                // si el artículo existe creamos una nueva fila json
+                                prod(obj);
+                                $('#codigo').val('');
+                            }
+                        },
+                        fail: function(e, x) {
+                            // si falla algo en la función lanzamos un alert
+                            alert('Upss, tenemos un problema.');
+                        }
+                    });
+                }
+                // borramos los valores del campo id="codigo" para posteriormete
+                // ingresar uno nuevo. 
+                //$('#codigo').val('');
+            }
+
+            /**
+             * Cuando se cambia manualmente la cantidad de los artículos
+             * la función recalcula el valor total de los artículos y posteriormente
+             * recalcula el gran total.
+             * @param {type} id
+             * @returns
+             */
+            function suma(id)
+            {
+                var cantidad = $('#qt_' + id).val();
+                cantidad = cantidad.replace(/[^\d\.]/, '');
+                $('#qt_' + id).val(cantidad);
+
+                var precio_unitario = Number($('#precio_unitario_' + id).text());
+                var precio_mayoreo = Number($('#precio_mayoreo_' + id).text());
+                var cantidad_mayoreo = Number($('#cantidad_mayoreo_' + id).text());
+                if (cantidad >= cantidad_mayoreo) {
+                    var total = cantidad * precio_mayoreo;
+                } else {
+                    var total = cantidad * precio_unitario;
+                }
+
+
+
+                var redondeo = redondeo2decimales(total);
+                $('#precio_total_' + id).html(redondeo);
+                gran_total();
+            }
+
+            /**
+             * Si cuando se abandona el campo de cantidad
+             * esta vacio, se pone por defecto en 1
+             * @param text input
+             */
+            function vacio(input, id)
+            {
+                if (!input.value || (input.value == 0)) {
+                    input.value = 1;
+                    suma(id);
+                }
+            }
+
+
+            /**
+             * Ésta función verifica que solo al presionar enter en el campo de código
+             * se realice la acción de pedir producto
+             * 
+             * @param Event e  , Evento que se pasa como parámetro
+             */
+            function runenter(e) {
+                //Se llama a la función solo si se presiona enter
+                if (e.keyCode == 13)
+                {
+                    accion();
+                    gran_total();
+                }
+            }
+
+            /**
+             * Cuando la venta finaliza, se obtienen los identificadores de
+             * los artículos, y así mismo se obtiene la cantidad de articulos
+             * comprados.
+             */
+            function terminar_venta()
+            {
+                var articles = $('.qery').length;
+
+                if (articles > 0) {
+                    var productosCantidades = {};
+
+                    // obtener los productos vendidos
+                    $('.qery').each(function() {
+
+                        var qery = $(this).text();
+
+                        var id = $('#id_' + qery).text();
+                        var qt = $('#qt_' + qery).val();
+
+                        productosCantidades[qery] = {
+                            'id': id,
+                            'qt': qt
+                        };
+                    });
+
+                    var json = JSON.stringify(productosCantidades);
+
+                    $('#json_in').val(json);
+                    return confirm('¿Deseas terminar la venta?');
+                }
+                else {
+                    alert('No hay nada en el carrito :P');
+                    return false;
+                }
+
+
+            }
+
+            /**
+             * Quita un producto de la lista ya generada,
+             * con la cantidad de artículos vendidos,
+             * 
+             * @param id  identificador de la fila
+             */
+            function qpdl(id)
+            {
+                $('#' + id).remove();
+                gran_total();
+            }
+
+
+            /**
+             * Al escribir en la casilla el usuario verá los posibles
+             * artículos que necesita vender.
+             * 
+             * @returns identificador del artículo
+             */
+            function nombreArticulo()
+            {
+                var producto = $('#codigo').val();
+
+
+                if (producto.length >= 4)
+                {
+                    //alert("Mas de cinco");
+                    var parametros = {
+                        'producto': producto
+                    };
+                    $.ajax({
+                        data: parametros,
+                        url: '{{path('posibles_productos')}}',
+                        type: 'post',
+                        beforeSend: function() {
+                        },
+                        success: function(response) {
+                            // los artículos nos lo regresa en formato JSON,
+                            // procedemos a convertirlo en un objeto
+                            var json = response;
+                            obj = JSON.parse(json);
+
+                            // creamos el autocompletado 
+
+                        },
+                        fail: function(e, x) {
+                            // si falla algo en la función lanzamos un alert
+                            alert('Upss, tenemos un problema. reintentalo por favor');
+                        }
+                    });
+                }
+
+
+
+
+            }
+
+
+            </script>
+
+            <h2>Venta:</h2>
+
+            <br />
+            <h4>{{ tienda.nombre }}  a {{ "now"|date('d / m / Y  -  h:i:s a')}}</h4>
+            <br/><br/><br/>
+
+
+
+
+            <table id="tabla_productos"  border="1">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Nombre</th>
+                {#<th class="ides" >ID (de control, no se verá)</th>#}
+                            <th>Cantidad</th>
+                            {#<th>Descripción</th>#}
+                                <th>Precio Unitario</th>
+                                <th>Total</th>
+                                <th>Quitar</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productos_compra">
+
+        {#% for producto in productos%}
+            <tr>
+                <td>{{producto.nombre}}</td>
+                <td>{{producto.id}}</td>
+                <td><input class="cantidad" id="cantidad_{{producto.id}}" type="text" onkeyup="suma('{{producto.id}}');" /></td>
+                <td>{{producto.descripcion|slice(0, 40)}}</td>
+                <td><input class="precio" id="precio_{{producto.id}}" type="text" value="{{producto.precio}}" /></td>
+                <td class="total" id="total_{{producto.id}}">{{producto.precio}}</td>
+                <td>X</td>
+            </tr>
+        {% endfor %#}
+                        </tbody>
+                    </table>
+
+
+
+                    <br/><br/>
+                    <input id="codigo" type="text" onkeyup="nombreArticulo();" onkeypress="return runenter(event);" placeholder="<código de barras>  o SKU (presiona enter para añadirlo)" /><br/>
+                    <input type="hidden" id="resultado" type="text" /><br/>
+                    <div class="total_venta">TOTAL :<div id="gran_total" >$ 00.00</div></div>
+                    <br/><br/>
+                    <form  onsubmit="return terminar_venta();" action="{{path('venta_terminada')}}" method="post">
+                        <input id="tienda" type="hidden" name="tienda" value="{{tienda.id}}" />
+                        <input id="control" type="hidden" name="control" value="{{control}}" />
+                        <input id="json_in" type="hidden" name="json_in" value="" />
+                        <input class="fsbutton_ok" type="submit" value="Terminar Venta" />
+                    </form>
+                    <br/>
+
+
+                </div>
+{% endblock %}

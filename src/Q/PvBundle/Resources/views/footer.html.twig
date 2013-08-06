@@ -1,0 +1,65 @@
+<section id="footer" class="container clearfix"> 
+
+    <!--first column starts-->
+    <div class="span4">
+        <h5>Nuestros últimos clientes</h5>
+        <div class="flexslider slider-testimonial">
+            <ul class="slides">
+
+                <!--first testimonial starts-->
+                <li>
+                    <p>"Me ayudó en mis finanzas, muchas gracias."</p>
+                    <h6>M. Eliborio <span> www.peluquerias.com </span></h6>
+                </li>
+                <!--first testimonial ends--> 
+
+                <!--second testimonial starts-->
+                <li>
+                    <p>"Justo lo que quería"</p>
+                    <h6>Magaly J.<span>www.tiendasmagy.com</span></h6>
+                </li>
+                <!--second testimonial ends--> 
+
+                <li>
+                    <p>"Que buena idea, los recomiendo"</p>
+                    <h6>Itzvan Z.<span>www.elguapo.com</span></h6>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    <!--first column ends--> 
+
+    <!--second column starts-->
+    <div class="span4">
+        <h5>Mapa</h5>
+        <!--<div class="flickr-feed"> 
+            <script type="text/javascript" src="http://www.flickr.com/badge_code_v2.gne?count=8&amp;display=latest&amp;size=s&amp;layout=x&amp;source=user&amp;user=89593078@N02"></script> 
+        </div>-->
+        <a href="{{path('contact_page')}}">Contacto</a><br/>
+        <a href="{{path('terms_page')}}">Términos de servicio</a><br/>
+        <a href="{{path('privacy_page')}}">Aviso de privacidad</a><br/>
+        <a href="{{path('disclaimer_page')}}">Disclaimer</a><br/>
+        <a href="{{path('help_page')}}">Ayuda</a><br/>
+        <a href="{{path('sitemap_page')}}">Mapa del sitio</a><br/>
+    </div>
+    <!--second column ends--> 
+
+    <!--third column starts-->
+    <div class="span4">
+        <h5>Boletín</h5>
+        <p>Suscríbase al boletín mensual de promociones</p>
+        <form  id="subform" method="post" action="">
+            <fieldset>
+                <p>
+                    <input name="email"  class="required email noborder" type="text" placeholder="Email Address">
+                    <input type="submit" value="Go" class="button small color"/>
+                </p>
+                <div class="clearfix"></div>
+                <div id="subresult"></div>
+            </fieldset>
+        </form>
+    </div>
+    <!--third column ends--> 
+
+</section>

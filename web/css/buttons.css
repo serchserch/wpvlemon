@@ -1,0 +1,66 @@
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * BUTTONS  */
+
+/*
+FROM: 
+http://blog.formstack.com/2010/customize-form-buttons-with-css/
+*/
+
+.fsbutton_ok , .fsbutton_cancel, .fsbutton_erase{
+    float: left;
+    min-width: 150px !important;
+    padding: 10px 15px 11px !important;
+    font-size: 18px !important;
+    font-weight: bold;
+    color: #ffffff !important;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+    -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+    -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+}
+.fsbutton_ok
+{
+    margin-left: 50px;
+    background-color: #205f82;
+    /*background-color: #57d6c7;*/
+    text-shadow: 1px 1px #256d95;
+    /*text-shadow: 1px 1px #57D6C7;*/
+    border: 1px solid #256d95;
+    /*border: 1px solid #57D6C7;*/
+    margin-bottom: 30px;
+}
+
+.fsbutton_cancel
+{
+    margin-left: 10px;
+    background-color: #d64c00;
+    /*background-color: #57d6c7;*/
+    text-shadow: 1px 1px #ff5a00;
+    /*text-shadow: 1px 1px #57D6C7;*/
+    border: 1px solid #ff5a00;
+    /*border: 1px solid #57D6C7;*/
+    margin-bottom: 20px;
+    margin-top: 5px;
+}
+
+.fsbutton_erase
+{
+    margin-left: 50px;
+    clear: both;
+    padding: 5px 10px 6px !important;
+    font-size: 12px !important;
+    background-color: #ff0000;
+    font-weight: bold;
+    text-shadow: 1px 1px #ff6060;
+    color: #ffffff;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border: 1px solid #ff6060;
+    cursor: pointer;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+    -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+    -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+}

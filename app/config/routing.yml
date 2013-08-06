@@ -1,0 +1,5 @@
+q_pv:
+    resource: "@QPvBundle/Controller/"
+    type:     annotation
+    prefix:   /
+

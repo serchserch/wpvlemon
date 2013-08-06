@@ -1,0 +1,30 @@
+{% extends "QPvBundle::template.html.twig" %}
+
+{% block content %}
+    <h1>Productos edit</h1>
+
+    <form action="{{ path('productos_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+        <input type="hidden" name="_method" value="PUT" />
+        {{ form_widget(edit_form, {'attr' : {'class' : 'form_new'}}) }}
+        <p>
+            <button class="fsbutton_ok" type="submit">Ok</button>
+        </p>
+    </form>
+
+        <ul class="record_actions">
+    <li>
+        <a class="fsbutton_cancel" href="{{ path('productos') }}">
+            Cancelar
+        </a>
+    </li>
+    {#
+    <li>
+        <form action="{{ path('productos_delete', { 'id': entity.id }) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+    #}
+</ul>
+{% endblock %}

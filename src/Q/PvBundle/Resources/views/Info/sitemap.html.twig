@@ -1,0 +1,20 @@
+{% extends "QPvBundle::template.html.twig" %}
+
+{%block content%}
+<h1>Sitemap</h1>
+
+
+<h3>Páginas Info:</h3>
+<a href="{{path('contact_page')}}">Contacto</a>
+<a href="{{path('terms_page')}}">Términos de servicio</a>
+<a href="{{path('privacy_page')}}">Aviso de privacidad</a>
+<a href="{{path('disclaimer_page')}}">Disclaimer</a>
+<a href="{{path('help_page')}}">Ayuda</a>
+<a href="{{path('sitemap_page')}}">Mapa del sitio</a>
+{#
+
+<a href="{{path('')}}"></a>
+<a href="{{path('')}}"></a>
+#}
+{% endblock %}
+

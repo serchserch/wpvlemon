@@ -1,0 +1,29 @@
+
+cambiar nombre de tiendas por sucursales
+
+Etiquetas de los productos 
+
+Categorías de los prodcutos (y que los mismos usuarios puedan agregar tipos de producto)
+
+El producto puede o no ser vendido ( por defectuoso o ilegal, porque esta apartado, porque hay una posible compra, etc)
+
+Marca del prodcuto, que te permita agregarla o dejarla sin nada. (por defecto marca generica)
+
+Proveedor (ponerte a ti mismo como proveedor, agregar uno o dejarlo en blanco)
+	Codigo que el proveedor maneja del producto
+	Codigo de barras 
+	Codigo de producto SKU stock  keeping unit
+	Codigo de venta
+	Codigo de compra
+
+Precio que me da el proveedor sin impuesto
+Ganancia en % - - 
+Precio de venta
+Impuestos
+Precio de venta (con impuestos)
+
+Mandar la nota por correo electrónico ** 
+
+
+Al registro de una tienda se puede imprimir el de "este establecimiento cuenta con WPV.com"
+

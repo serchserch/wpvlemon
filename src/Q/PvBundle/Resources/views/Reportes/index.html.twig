@@ -1,0 +1,98 @@
+{% extends "QPvBundle::template.html.twig" %}
+
+{% block content %}
+<h1>Hoy : {{"now"|date('d  / m / Y')}}</h1>
+{% include 'QPvBundle:Reportes:menu.html.twig'%}
+
+{#
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+    google.load("visualization", "1", {packages: ["corechart"]});
+    google.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+            ['Importe', 'Porcentaje'],
+            ['Impuesto', 150],
+            ['Costos', 980],
+            ['Ganancia', 1230],
+        ]);
+        var options = {
+            title: '',
+            backgroundColor: { fill:'transparent' }
+        };
+        
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+    }
+</script>
+#}
+
+<br /><br /><br />
+
+<section class="content dark container clearfix">
+
+    <div class="span12">
+        <h2>Estadisticas de <span class="meta">Hoy</span> (todas las tiendas)</h2>
+    </div>
+
+    <div class="span12">
+        <h3>Artículos vendidos en el día. <span class="meta"> {{prodcutos_vendidos}} </span></h3>
+    </div>
+    
+</section>
+
+<section class="content dark container clearfix">
+    <div class="span12">
+        <h2> Total vendido <span class="meta"> $ {{total_vendido}}</span></h2>
+    </div>
+    <br />
+    <br />
+    {#<div id="chart_div" style="width: 80%; height: 350px;"></div>#}
+</section>
+
+
+<section class="content dark container clearfix">
+    <div class="span12">
+        <h2> Ventas del  <span class="meta">Día: </span></h2>
+    </div>
+    <br />
+    {#<div id="chart_div" style="width: 80%; height: 350px;"></div>#}
+</section>
+<table class="records_list">
+
+
+    <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Ver Ticket</th>
+           
+            
+            <th>Artículos Diferentes</th>
+            <th>Total de artículos</th>
+            <th>Total Venta</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for venta in ventas %}
+            <tr>
+                <td>{{ venta.fecha|date('h:i:s a') }}</td>
+                <td><a target="_blank" href="{{path('ticket',{'ticket': venta.id})}}">{{venta.codigo}}</a></td>
+                
+                {#<td><a href="{{ path('productos_show', { 'id': entity.id }) }}">{{ entity.nombre }}</a></td>#}
+                <td>{{ venta.no_productos_vendidos|number_format }}</td>
+                <td>{{ venta.no_articulos_vendidos|number_format }}</td>
+                <td> $ {{ venta.total_con_impuesto }}</td>
+                {#<td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('productos_edit', { 'id': entity.id }) }}">Editar</a>
+                        </li>
+                    </ul>
+                </td>#}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

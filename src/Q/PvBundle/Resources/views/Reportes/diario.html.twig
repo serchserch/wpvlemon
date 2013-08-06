@@ -1,0 +1,197 @@
+{% extends "QPvBundle::template.html.twig" %}
+
+{% block content %}
+<h1> Días anteriores : </h1>
+{% include 'QPvBundle:Reportes:menu.html.twig'%}
+
+<script src="/js/jquery-ui.js"></script>
+<link rel="stylesheet" href="/css/overcast/jquery-ui-1.10.3.custom.min.css" />
+<script>
+    function venta(obj)
+    {
+        $('#total_vendido').html(obj.total_vendido);
+        $('#articulos_vendidos').html(obj.articulos_vendidos);
+
+        // Limpiar lista
+        $('#lista_ventas').html('');
+
+        var ventas = obj.ventas_del_dia;
+
+        var element = null;
+        for (var i = 0; i < ventas.length; i++) {
+            element = ventas[i];
+            $('#lista_ventas').append('<tr id="articulo_' + element.id + '">');
+            $('#articulo_' + element.id).append('<td>' + element.fecha + '</td>');
+            $('#articulo_' + element.id).append('<td><a target="_blank" href="/pos/ticket/' + element.id + '">' + element.codigo + '</a></td>');
+            $('#articulo_' + element.id).append('<td>' + element.no_productos_vendidos + '</td>');
+            $('#articulo_' + element.id).append('<td>' + element.no_articulos_vendidos + '</td>');
+            $('#articulo_' + element.id).append('<td> $ ' + element.total_con_impuesto + '</td>');
+            element = null;
+        }
+
+    }
+    function diaDe(day, month, year, tienda)
+    {
+        var tienda = typeof tienda !== 'undefined' ? tienda : 0;
+        $.ajax({
+            data: {
+                'tienda': tienda,
+                'day': day,
+                'month': month,
+                'year': year
+            },
+            url: '{{path('reporte_dia_d')}}',
+            type: 'POST',
+            //timeout: 20,
+            beforeSend: function() {
+
+            },
+            success: function(response) {
+                // los artículos nos lo regresa en formato JSON,
+                // procedemos a convertirlo en un objeto
+                //var json = response;
+                //alert(response);
+                var obj = JSON.parse(response);
+                //alert(obj);
+                venta(obj);
+
+            },
+            fail: function(e, x) {
+                // si falla algo en la función lanzamos un alert
+                alert('Upss, tenemos un problema.');
+            }
+        });
+    }
+    $(function() {
+
+        $.datepicker.regional['es'] = {
+            closeText: 'Cerrar',
+            prevText: '<Ant',
+            nextText: 'Sig>',
+            currentText: 'Hoy',
+            monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+            dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+            dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
+            dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+            weekHeader: 'Sm',
+            dateFormat: 'dd/mm/yy',
+            firstDay: 1,
+            isRTL: false,
+            yearSuffix: ''
+        };
+        $.datepicker.setDefaults($.datepicker.regional['es']);
+        $(".datepicker").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            maxDate: '{{'now'|date('d/m/Y')}}',
+            minDate: '{{min|date('d/m/Y')}}',
+            onSelect: function() {
+                var date = $(".datepicker").datepicker("getDate");
+                var day = date.getDate();
+                var month = (date.getMonth()) + 1;
+                var year = date.getFullYear();
+                //Obtener tienda
+                var idtienda = $('#tiendas_id').val();
+                diaDe(day, month, year, idtienda);
+                $('.dia').html(day + ' / ' + month + ' / ' + year);
+            }
+        });
+    });
+
+    function getTienda() {
+        var e = document.getElementById("tiendas_id");
+        var nombretienda = e.options[e.selectedIndex].text;
+        $('#select_tienda').html(nombretienda);
+    }
+    </script>
+
+
+
+    <style type="text/css" >
+    </style>
+
+
+    <section class="content dark container clearfix">
+
+        <form>
+            <div class="form_new">
+                <div>
+                    <div class="span12">
+                        <h2>Selecciona la <span class="meta">Tienda</span></h2>
+                    </div>
+                        <select onchange="getTienda();" id="tiendas_id">
+                        <option value="0" selected="selected">Todas las tiendas</option>
+                        {%for t in tiendas%}
+                        <option value="{{t.id}}" >{{t.nombre}}</option>
+                        {% endfor %}
+                    </select> 
+                        
+                </div>
+
+                <br /><br />
+
+                <div>
+                    <div class="span12">
+                        <h2>Selecciona el <span class="meta">Día</span></h2>
+                    </div>
+                    <input type="text" name="fecha" id="fecha" class="datepicker" />
+                </div>
+            </div>
+        </form>
+    </section>
+
+    <section class="content dark container clearfix">
+
+        <div class="span12">
+            <h2>Estadisticas del día : <span class="meta dia" ></span><div id="select_tienda">Todas las tiendas</div></h2>
+        </div>
+
+        <div class="span12">
+            <h3>Artículos vendidos en el día. <span class="meta" id="articulos_vendidos"></span></h3>
+        </div>
+
+    </section>
+
+    <section class="content dark container clearfix">
+        <div class="span12">
+            <h2> Total vendido  $<span class="meta" id="total_vendido"></span></h2>
+        </div>
+        <br />
+        <br />
+    {#<div id="chart_div" style="width: 80%; height: 350px;"></div>#}
+    </section>
+
+
+    <section class="content dark container clearfix">
+        <div class="span12">
+            <h2> Ventas del  Día : <span class="meta dia"></span></h2>
+        </div>
+        <br />
+    {#<div id="chart_div" style="width: 80%; height: 350px;"></div>#}
+    </section>
+
+    <table id="lista" class="records_list">
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Ver Ticket</th>
+                <th>Artículos Diferentes</th>
+                <th>Total de artículos</th>
+                <th>Total Venta</th>
+            </tr>
+        </thead>
+
+        <tbody id="lista_ventas">
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+
+
+{% endblock %}

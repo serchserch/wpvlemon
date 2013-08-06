@@ -1,0 +1,56 @@
+{% extends "QPvBundle::template.html.twig" %}
+
+{% block content %}
+<h1>Meses anteriores</h1>
+{% include 'QPvBundle:Reportes:menu.html.twig'%}
+
+<section class="content dark container clearfix">
+
+        <form>
+            <div class="form_new">
+                <div>
+                    <div class="span12">
+                        <h2>Selecciona la <span class="meta">Tienda</span></h2>
+                    </div>
+                    <select onchange="getTienda();" id="tiendas_id">
+                        <option value="0" selected="selected">Todas las tiendas</option>
+                        {%for t in tiendas%}
+                        <option value="{{t.id}}" >{{t.nombre}}</option>
+                        {% endfor %}
+                    </select> 
+
+                </div>
+
+
+                <div>
+                    <div class="span12">
+                        <h2>Selecciona el <span class="meta">Mes</span></h2>
+                    </div>
+                    <select onchange="" id="">
+                        {%for m in meses%}
+                            <option value="{{loop.index}}" >{{m}}</option>
+                        {% endfor %}
+                        </select> 
+
+                    </div>
+                
+                    
+                    <div>
+                    <div class="span12">
+                        <h2>Selecciona el <span class="meta">Año</span></h2>
+                    </div>
+                    <select onchange="" id="">
+                        {%for m in 2001..2012%}
+                            <option value="{{m}}" >{{m}}</option>
+                        {% endfor %}
+                        </select> 
+
+                    </div>
+
+                </div>
+            </form>
+        </section>
+
+
+
+{% endblock %}

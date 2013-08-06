@@ -1,0 +1,60 @@
+{% extends "QPvBundle::template.html.twig" %}
+
+{% block content %}
+{#
+<section id="header" class="container clearfix">
+    <div class="span12">
+        <nav class="mainNav">
+            <ul>
+                <li><a class="page" href="">Buscar producto</a></li>
+                
+                <li><a class="page" href="">Productos por almacén</a></li>
+                
+                <li><a class="page" href="">Existencias</a></li>
+
+                <li><a class="page" href=""></a></li> 
+
+                <li><a class="page" href=""></a> </li>
+                    
+            </ul>
+        </nav>
+    </div>
+</section>
+#}
+    <h1>Lista de prodcutos</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Precio Venta</th>
+                <th>Almacen</th>
+                <th>Editar</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('producto_show', { 'id': entity.id , 'almacen': entity.almacen_id }) }}">{{ entity.nombre }}</a></td>
+                <td> $ {{ entity.precio_venta }}</td>
+                <td>{{ entity.almacen_nombre }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('producto_edit', { 'id': entity.id , 'almacen': entity.almacen_id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a class="fsbutton_ok" href="{{ path('producto_new') }}">
+                Nuevo Producto
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

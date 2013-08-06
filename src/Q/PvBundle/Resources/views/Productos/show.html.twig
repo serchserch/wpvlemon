@@ -1,0 +1,106 @@
+{% extends "QPvBundle::template.html.twig" %}
+
+{% block content %}
+    <h1>Productos</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Fecha_creacion</th>
+                <td>{{ entity.fechacreacion|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Fecha_modificacion</th>
+                <td>{{ entity.fechamodificacion|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Activo</th>
+                <td>{{ entity.activo }}</td>
+            </tr>
+            <tr>
+                <th>Agotado</th>
+                <td>{{ entity.agotado }}</td>
+            </tr>
+            <tr>
+                <th>Disponible</th>
+                <td>{{ entity.disponible }}</td>
+            </tr>
+            <tr>
+                <th>Codigo_de_barras</th>
+                <td>{{ entity.codigodebarras }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ entity.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Descripcion</th>
+                <td>{{ entity.descripcion }}</td>
+            </tr>
+            <tr>
+                <th>Precio_compra</th>
+                <td>{{ entity.preciocompra }}</td>
+            </tr>
+            <tr>
+                <th>Precio_venta</th>
+                <td>{{ entity.precioventa }}</td>
+            </tr>
+            <tr>
+                <th>Precio_mayoreo</th>
+                <td>{{ entity.preciomayoreo }}</td>
+            </tr>
+            <tr>
+                <th>Cantidad_mayoreo</th>
+                <td>{{ entity.cantidadmayoreo }}</td>
+            </tr>
+            <tr>
+                <th>Cantidad_minima</th>
+                <td>{{ entity.cantidadminima }}</td>
+            </tr>
+            <tr>
+                <th>Cantidad_actual</th>
+                <td>{{ entity.cantidadactual }}</td>
+            </tr>
+            <tr>
+                <th>Codigo_proveedor</th>
+                <td>{{ entity.codigoproveedor }}</td>
+            </tr>
+            <tr>
+                <th>Sku</th>
+                <td>{{ entity.sku }}</td>
+            </tr>
+            <tr>
+                <th>Codigo_venta</th>
+                <td>{{ entity.codigoventa }}</td>
+            </tr>
+            <tr>
+                <th>Codigo_compra</th>
+                <td>{{ entity.codigocompra }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('productos') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('productos_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('productos_delete', { 'id': entity.id }) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
+{% endblock %}

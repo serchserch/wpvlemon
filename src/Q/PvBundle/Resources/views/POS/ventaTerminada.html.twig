@@ -1,0 +1,68 @@
+{% extends "QPvBundle::template.html.twig" %}
+
+{% block content %}
+<style type="text/css">
+        .inventario_bajo{
+            color: #ee0000;
+            font-size: large;
+            font-weight: bold;
+        }
+</style>
+
+<section class="content dark container clearfix">
+    <div class="span9">
+
+        <h2>{{tienda.nombre}}</h2>
+        <p>Subtotal : $ {{ total_sin_impuesto }}</p>
+        <p>Impuesto : $ {{ impuesto }}</p>
+        <h2>Total $ {{total}} </h2>
+        <h2>Venta No. : {{venta_id}},  Código de venta : {{codigo_venta}}</h2>
+        {% if descuento_total > 0%}
+        <h3>Descuento $ {{descuento_total}}</h3>
+        {% endif %}
+        <p>Productos vendidos : {{total_articulos_iguales}} </p>
+        <p>Artículos vendidos : {{total_articulos}} </p>
+        <p>Te Atendió : {{ app.user.nombre }}</p>
+        
+    </div>
+</section>
+
+<section class="content dark container clearfix">
+    <div class="span9">
+        <a class="fsbutton_ok" target="_blank" href="{{path('ticket',{'ticket': venta_id})}}">Ticket</a>
+        <a class="fsbutton_ok" href="{{path('pos_index',{'id_tienda': tienda.id })}}">Otra Venta</a>
+        {#<a class="fsbutton_ok" href="">Factura</a>#}
+    </div>
+</section>
+
+<section class="content dark container clearfix">
+    
+        <table class="records_list">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Cantidad Vendida</th>
+                    <th>En Inventario</th>
+                    <th>Precio Unitario</th>
+                    <th>Descuento Mayoreo</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+        {% for p in productos_comprados %}
+                    <tr>
+                        <td>{{p.nombre}}</td>
+                        <td>{{p.cantidad}}</td>
+                        <td {% if p.inventario <= p.cantidad_minima %}class="inventario_bajo"{% endif%} >{{p.inventario}}</td>
+                        <td>$ {{p.precio_venta}}</td>
+                        <td> - ${{p.descuento}}</td>
+                        <td>$ {{p.subtotal}}</td>
+                    </tr>
+        {% endfor %}
+                </tbody>
+            </table>
+
+        
+
+    </section>
+{% endblock %}

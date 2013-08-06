@@ -1,0 +1,41 @@
+{% extends "QPvBundle::template.html.twig" %}
+
+{% block content %}
+<h1>Tus Almacenes</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Descripcion</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('panel_almacen_show', { 'id': entity.id }) }}">{{ entity.nombre }}</a></td>
+                <td>{{ entity.descripcion |slice(0, 55)}} . . .</td>
+                <td>
+                    <ul>
+                        {#<li>
+                            <a href="{{ path('panel_almacen_show', { 'id': entity.id }) }}">Ver</a>
+                        </li>#}
+                        <li>
+                            <a href="{{ path('panel_almacen_edit', { 'id': entity.id }) }}">Editar</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a class="fsbutton_ok" href="{{ path('panel_almacen_new') }}">
+                Crear Nuevo Almacen
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

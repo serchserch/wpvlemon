@@ -13,3 +13,14 @@ Menu de Usuario
 - Elegir que día empieza su mes y su semana
 
 - Logo del negocio
+
+- Al momento del registro, se loguea en automático.
+
+- precio de mayoreo un aviso (por si no quiere mayoreo)
+
+- * Cambiar tiendas por "sucursal"
+
+
+- campo agotado, para que no se vea en la página we, pero si se siga vendiendo en el POS.
+
+- descargar en CSV , los reportes de todo el año  

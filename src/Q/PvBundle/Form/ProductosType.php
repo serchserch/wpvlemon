@@ -37,16 +37,18 @@ class ProductosType extends AbstractType
         foreach ($this->almacenes as $value) {
             $almacenes += array($value['id'] => $value['nombre']);
         }
+        
+        $roundup = \Symfony\Component\Form\Extension\Core\DataTransformer\IntegerToLocalizedStringTransformer::ROUND_UP;
+        
         $builder
-//            ->add('fecha_creacion')
-//            ->add('fecha_modificacion')
-//            ->add('activo')
-//            ->add('agotado')
+                
                 ->add('codigo_de_barras', 'text', array(
                     'label' => 'Código de barras:',
                     'attr' => array(
                         'placeholder' => 'Si no tienes escáner, déjalo vacío'
                     ),
+                    
+                    
                     'constraints' => array(
                         new Length(array(
                             'min' => 0,
@@ -80,18 +82,130 @@ class ProductosType extends AbstractType
                          * @todo Selecionar almacen seleccionado anteriormente
                          */
                 ))
-                ->add('nombre')
-                ->add('descripcion')
-                ->add('precio_compra')
-                ->add('precio_venta')
-                ->add('precio_mayoreo')
-                ->add('cantidad_mayoreo')
-                ->add('cantidad_minima')
-                ->add('cantidad_actual')
-                ->add('codigo_proveedor')
-                ->add('sku')
-                ->add('codigo_venta')
-                ->add('codigo_compra')
+                ->add('nombre', 'text', array(
+                    'label' => 'Nombre:',
+                    'attr' => array(
+                        'placeholder' => 'Nombre de tu producto'
+                    ),
+                    'required' => true,
+                    'constraints' => array(
+                        new Length(array(
+                            'min' => 5,
+                            'max' => 45,
+                            'maxMessage' => 'El nombre es muy largo',
+                            'minMessage' => 'El nombre es muy corto'
+                                )),
+                    ),
+                ))
+                ->add('descripcion', 'textarea', array(
+                    'label' => 'Descripción:',
+                    'required' => false,
+                    'attr' => array(
+                        'placeholder' => 'Describe tu producto'
+                    ),
+                ))
+                ->add('precio_compra', 'number', array(
+                    'label' => 'Precio de compra:',
+                    'attr' => array(
+                        'placeholder' => 'Precio al que tu lo adquieres'
+                    ),
+                    'precision' => 2,
+                    'rounding_mode' => $roundup,
+                    'invalid_message' => 'Solo números ',
+                    'constraints' => array(
+                        new Range(array(
+                            'min' => 0,
+                            'minMessage' => 'Debe ser cero o mayor',
+                                )),
+                    ),
+                ))
+                ->add('precio_venta', 'number', array(
+                    'label' => 'Precio de venta:',
+                    'attr' => array(
+                        'placeholder' => 'Precio de venta'
+                    ),
+                    'precision' => 2,
+                    'rounding_mode' => $roundup,
+                    'invalid_message' => 'Solo números',
+                    'constraints' => array(
+                        new Range(array(
+                            'min' => 0,
+                            'minMessage' => 'Debe ser cero o mayor',
+                                )),
+                    ),
+                ))
+                ->add('precio_mayoreo', 'number', array(
+                    'label' => 'Precio de Mayoreo:',
+                    'attr' => array(
+                        'placeholder' => 'Precio de mayoreo'
+                    ),
+                    'precision' => 2,
+                    'rounding_mode' => $roundup,
+                    'invalid_message' => 'Solo números ',
+                    'constraints' => array(
+                        new Range(array(
+                            'min' => 0,
+                            'minMessage' => 'Debe ser cero o mayor',
+                                )),
+                    ),
+                ))
+                ->add('cantidad_mayoreo', 'number', array(
+                    'label' => 'Cantidad Mayoreo:',
+                    'attr' => array(
+                        'placeholder' => 'Cantidad que necesitas vender para que se considere mayoreo'
+                    ),
+                    'precision' => 2,
+                    'rounding_mode' => $roundup,
+                    'invalid_message' => 'Solo números',
+                    'constraints' => array(
+                        new Range(array(
+                            'min' => 0,
+                            'minMessage' => 'Debe ser cero o mayor',
+                                )),
+                    ),
+                ))
+                ->add('cantidad_minima', 'number', array(
+                    'label' => 'Cantidad Mínima',
+                    'attr' => array(
+                        'placeholder' => 'Cantidad mínima de unidades que requieres en almacén'
+                    ),
+                    'precision' => 2,
+                    'rounding_mode' => $roundup,
+                    'invalid_message' => 'Solo números',
+                    'constraints' => array(
+                        new Range(array(
+                            'min' => 0,
+                            'minMessage' => 'Debe ser cero o mayor',
+                                )),
+                    ),
+                ))
+                ->add('cantidad_actual', 'number', array(
+                    'label' => 'Cantidad Actual',
+                    'attr' => array(
+                        'placeholder' => 'Las unidades que hay dentro del almacén'
+                    ),
+                    'precision' => 2,
+                    'rounding_mode' => $roundup,
+                    'invalid_message' => 'Solo números',
+                    'constraints' => array(
+                        new Range(array(
+                            'min' => 0,
+                            'minMessage' => 'Debe ser cero o mayor',
+                                )),
+                    ),
+                ))
+                ->add('sku','text',array(
+                    'label' => 'SKU:',
+                    'attr' => array(
+                        'placeholder' => 'Puedes crear tu propio código de artículo. (Lo puedes dejar vacío)',
+                    ),
+                    'required' => false,
+                ))
+
+                // 
+                // ->add('codigo_proveedor')
+                //->add('codigo_venta')
+                //->add('codigo_compra')
                 ->add('disponible', 'choice', array(
                     'attr' => array(
                         'class' => 'choice'
@@ -106,21 +220,19 @@ class ProductosType extends AbstractType
                     'required' => true,
                     'data' => 1,
                 ))
-                ->add('imagen', 'file',array(
+                ->add('imagen', 'file', array(
                     'mapped' => false,
                     'required' => false,
                     'constraints' => array(
                         new File(array(
                             'maxSize' => '2M',
-                            'maxSizeMessage'=> 'Máximo 2Megas',
+                            'maxSizeMessage' => 'Máximo 2Megas',
                             'notReadableMessage' => 'No se puede leer tu archivo',
-                            
-                        )),
+                                )),
                         new Image(array(
                             'mimeTypesMessage' => 'Solo imágenes.',
                             'sizeNotDetectedMessage' => 'No se puede detectar el tamaño',
-                            
-                        )),
+                                )),
                     ),
                 ))
 

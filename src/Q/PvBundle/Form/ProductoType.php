@@ -39,62 +39,17 @@ class ProductoType extends AbstractType
         
         $builder
                 // - - - - - - - - - - - - - - - - - - - - - -  Codigo de barras
-                ->add('codigoDeBarras','text',array(
-                    'label' => 'Código de barras:',
-                    'attr' => array(
-                        'placeholder' => 'Si no tienes escáner, déjalo vacío'
-                    ),
-                    'constraints' => array(
-                        new Length(array(
-                            'min' => 0,
-                            'max' => 120,
-                            'maxMessage' => 'Es muy largo el código',
-                            'minMessage' => 'Es muy corto el código'
-                        )),
-                        new Regex(array(
-                            'message' => 'Sólo números y letras . Sin espacios',
-                            'pattern' => '/^[a-zA-Z0-9]*$/',
-                        )),
-                    ),
-                    'required' => false,
-                    
-                ))
+                ->add('codigoDeBarras')
                 
                 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - S K U
-                ->add('sku','text',array(
-                    'label' => 'SKU:',
-                    'attr' => array(
-                        'placeholder' => 'Puedes crear tu propio código de artículo. (Lo puedes dejar vacío)',
-                    ),
-                    'required' => false,
-                ))
+                ->add('sku')
                 
                 // - - - - - - - - - - - - - - - - - - - - - - - - - - - Nombre
-                ->add('nombre','text',array(
-                    'label' => 'Nombre:',
-                    'attr' => array(
-                        'placeholder' => 'Nombre de tu producto'
-                    ),
-                    'required' => true,
-                    'constraints' => array(
-                        new Length(array(
-                            'min' => 5,
-                            'max' => 45,
-                            'maxMessage' => 'El nombre es muy largo',
-                            'minMessage' => 'El nombre es muy corto'
-                        )),
-                    ),
-                ))
+                ->add('nombre')
                 
                 // - - - - - - - - - - - - - - - - - - - - - - - - - Descripcion
                 
-                ->add('descripcion','textarea',array(
-                    'label' => 'Descripción:',
-                    'required' => false,
-                    'attr' => array(
-                        'placeholder' => 'Describe tu producto'
-                    ),
-                ))
+                ->add('descripcion')
                 
                 
                 
@@ -123,110 +78,25 @@ class ProductoType extends AbstractType
                 
                 
                 // - - - - - - - - - - - - - - - - - - - - - - - - precio compra
-                ->add('precioCompra','number',array(
-                    'label' => 'Precio de compra:',
-                    'attr' => array(
-                        'placeholder' => 'Precio al que tu lo adquieres'
-                    ),
-                    'precision' => 2,
-                    'rounding_mode' => $roundup,
-                    'invalid_message' => 'Solo números ',
-                    'constraints' => array(
-                        new Range(array(
-                            'min' => 0,
-                            'minMessage' => 'Debe ser cero o mayor',
-                        )),
-                    ),
-                ))
+                ->add('precioCompra')
                 
                 // - - - - - - - - - - - - - - - - - - - - - - - - precio venta
-                ->add('precioVenta','number',array(
-                    'label' => 'Precio de venta:',
-                    'attr' => array(
-                        'placeholder' => 'Precio de venta'
-                    ),
-                    'precision' => 2,
-                    'rounding_mode' => $roundup,
-                    'invalid_message' => 'Solo números',
-                    'constraints' => array(
-                        new Range(array(
-                            'min' => 0,
-                            'minMessage' => 'Debe ser cero o mayor',
-                        )),
-                    ),
-                    
-                ))
+                ->add('precioVenta')
                 // - - - - - - - - - - - - - - - - - - - - - - - - precio mayoreo
-                ->add('precioMayoreo','number',array(
-                    'label' => 'Precio de Mayoreo:',
-                    'attr' => array(
-                        'placeholder' => 'Precio de mayoreo'
-                    ),
-                    'precision' => 2,
-                    'rounding_mode' => $roundup,
-                    'invalid_message' => 'Solo números ',
-                    'constraints' => array(
-                        new Range(array(
-                            'min' => 0,
-                            'minMessage' => 'Debe ser cero o mayor',
-                        )),
-                    ),
-                ))
+                ->add('precioMayoreo')
                 
                 
                 // - - - - - - - - - - - - - - - - - - - - cantidad para mayoreo
-                ->add('cantidadParaMayoreo','number',array(
-                    'label' => 'Cantidad Mayoreo:',
-                    'attr' => array(
-                        'placeholder' => 'Cantidad que necesitas vender para que se considere mayoreo'
-                    ),
-                    'precision' => 2,
-                    'rounding_mode' => $roundup,
-                    'invalid_message' => 'Solo números',
-                    'constraints' => array(
-                        new Range(array(
-                            'min' => 0,
-                            'minMessage' => 'Debe ser cero o mayor',
-                        )),
-                    ),
-                ))
+                ->add('cantidadParaMayoreo')
                 
                 
                 
                 // - - - - - - - - - - - - - - - - - -cantidad minima en almacén
-                ->add('cantidadMinima','number',array(
-                    'label' => 'Cantidad Mínima',
-                    'attr' => array(
-                        'placeholder' => 'Cantidad mínima de unidades que requieres en almacén'
-                    ),
-                    'precision' => 2,
-                    'rounding_mode' => $roundup,
-                    'invalid_message' => 'Solo números',
-                    'constraints' => array(
-                        new Range(array(
-                            'min' => 0,
-                            'minMessage' => 'Debe ser cero o mayor',
-                        )),
-                    ),
-                ))
+                ->add('cantidadMinima')
                 
                 
                 // - - - - - - - - - - - - - - - - Cantidad actual en el almacén 
-                ->add('cantidadActual','number',array(
-                    'label' => 'Cantidad Actual',
-                    'attr' => array(
-                        'placeholder' => 'Las unidades que hay dentro del almacén'
-                    ),
-                    'precision' => 2,
-                    'rounding_mode' => $roundup,
-                    'invalid_message' => 'Solo números',
-                    'constraints' => array(
-                        new Range(array(
-                            'min' => 0,
-                            'minMessage' => 'Debe ser cero o mayor',
-                        )),
-                    ),
-                ))
+                ->add('cantidadActual')
                 
                 
                 // - - - - - - - - - - - - - - - - - - - - - - - - - - - Agotado  

@@ -131,6 +131,13 @@ class User implements UserInterface
 
     
     /**
+     * @var string
+     *
+     * @ORM\Column(name="rfc", type="string", length=13)
+     */
+    protected $rfc;
+    
+    /**
      * @ORM\ManyToMany(targetEntity="Role")
      * @ORM\JoinTable(name="user_has_role",
      *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
@@ -557,5 +564,28 @@ class User implements UserInterface
     public function getUserRole()
     {
         return $this->user_role;
+    }
+
+    /**
+     * Set rfc
+     *
+     * @param string $rfc
+     * @return User
+     */
+    public function setRfc($rfc)
+    {
+        $this->rfc = $rfc;
+
+        return $this;
+    }
+
+    /**
+     * Get rfc
+     *
+     * @return string 
+     */
+    public function getRfc()
+    {
+        return $this->rfc;
     }
 }

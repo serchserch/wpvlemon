@@ -11,8 +11,20 @@ class AlmacenType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nombre')
-            ->add('descripcion')
+            ->add('nombre','text',array(
+                'label' => 'Nombre :',
+                'required' => true,
+                'attr' => array(
+                    'placeholder' => 'El nombre de tu almacén'
+                ),
+            ))
+            ->add('descripcion','textarea',array(
+                'label' => 'Descripción : ',
+                'required' => false,
+                'attr' => array(
+                    'placeholder' => 'El nombre de tu almacén.'
+                ),
+            ))
             //->add('fechaCreacion')
             //->add('fechaModificacion')
             //->add('activo')

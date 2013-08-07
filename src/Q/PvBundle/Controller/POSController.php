@@ -247,9 +247,11 @@ class POSController extends Controller
         $em->persist($venta);
         $em->flush();
 
-
-        
-
+        $venta_id = $venta->getId();
+       
+        foreach ($productos_comprados as $prod) {
+           // $prod['id'] , $prod['cantidad'],
+        }
 
         $data = array(
             'tienda' => $tienda,

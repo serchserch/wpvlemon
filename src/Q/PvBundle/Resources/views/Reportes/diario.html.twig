@@ -1,5 +1,5 @@
 {% extends "QPvBundle::template.html.twig" %}
-
+{% block title %}Reportes del día{% endblock %}
 {% block content %}
 <h1> Días anteriores : </h1>
 {% include 'QPvBundle:Reportes:menu.html.twig'%}
@@ -62,6 +62,18 @@
             }
         });
     }
+    function gettter()
+    {
+        var date = $(".datepicker").datepicker("getDate");
+        var day = date.getDate();
+        var month = (date.getMonth()) + 1;
+        var year = date.getFullYear();
+        //Obtener tienda
+        var idtienda = $('#tiendas_id').val();
+        diaDe(day, month, year, idtienda);
+        $('.dia').html(day + ' / ' + month + ' / ' + year);
+    }
+
     $(function() {
 
         $.datepicker.regional['es'] = {
@@ -87,14 +99,7 @@
             maxDate: '{{'now'|date('d/m/Y')}}',
             minDate: '{{min|date('d/m/Y')}}',
             onSelect: function() {
-                var date = $(".datepicker").datepicker("getDate");
-                var day = date.getDate();
-                var month = (date.getMonth()) + 1;
-                var year = date.getFullYear();
-                //Obtener tienda
-                var idtienda = $('#tiendas_id').val();
-                diaDe(day, month, year, idtienda);
-                $('.dia').html(day + ' / ' + month + ' / ' + year);
+                gettter();
             }
         });
     });
@@ -103,6 +108,7 @@
         var e = document.getElementById("tiendas_id");
         var nombretienda = e.options[e.selectedIndex].text;
         $('#select_tienda').html(nombretienda);
+        gettter();
     }
     </script>
 
@@ -120,13 +126,13 @@
                     <div class="span12">
                         <h2>Selecciona la <span class="meta">Tienda</span></h2>
                     </div>
-                        <select onchange="getTienda();" id="tiendas_id">
+                    <select onchange="getTienda();" id="tiendas_id">
                         <option value="0" selected="selected">Todas las tiendas</option>
                         {%for t in tiendas%}
                         <option value="{{t.id}}" >{{t.nombre}}</option>
                         {% endfor %}
                     </select> 
-                        
+
                 </div>
 
                 <br /><br />

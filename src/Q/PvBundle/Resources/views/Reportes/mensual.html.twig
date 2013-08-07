@@ -1,5 +1,5 @@
 {% extends "QPvBundle::template.html.twig" %}
-
+{% block title %}Reporte Mensual.{% endblock %}
 {% block content %}
 <h1> Meses Anteriores : </h1>
 {% include 'QPvBundle:Reportes:menu.html.twig'%}
@@ -17,102 +17,106 @@
 
         var ventas = obj.ventas_del_dia;
 
-        var element = null;
-        for (var i = 0; i < ventas.length; i++) {
-            element = ventas[i];
-            $('#lista_ventas').append('<tr id="articulo_' + element.id + '">');
-            $('#articulo_' + element.id).append('<td>' + element.fecha + '</td>');
-            $('#articulo_' + element.id).append('<td><a target="_blank" href="/pos/ticket/' + element.id + '">' + element.codigo + '</a></td>');
-            $('#articulo_' + element.id).append('<td>' + element.no_productos_vendidos + '</td>');
-            $('#articulo_' + element.id).append('<td>' + element.no_articulos_vendidos + '</td>');
-            $('#articulo_' + element.id).append('<td> $ ' + element.total_con_impuesto + '</td>');
-            element = null;
-        }
-
-    }
-    function diaDe(day, month, year, tienda)
-    {
-        var tienda = typeof tienda !== 'undefined' ? tienda : 0;
-        $.ajax({
-            data: {
-                'tienda': tienda,
-                'day': day,
-                'month': month,
-                'year': year
-            },
-            url: '{{path('reporte_dia_d')}}',
-            type: 'POST',
-            //timeout: 20,
-            beforeSend: function() {
-
-            },
-            success: function(response) {
-                // los artículos nos lo regresa en formato JSON,
-                // procedemos a convertirlo en un objeto
-                //var json = response;
-                //alert(response);
-                var obj = JSON.parse(response);
-                //alert(obj);
-                venta(obj);
-
-            },
-            fail: function(e, x) {
-                // si falla algo en la función lanzamos un alert
-                alert('Upss, tenemos un problema.');
+            var element = null;
+            for (var i = 0; i < ventas.length; i++) {
+                element = ventas[i];
+                $('#lista_ventas').append('<tr id="articulo_' + element.id + '">');
+                $('#articulo_' + element.id).append('<td>' + element.fecha + '</td>');
+                $('#articulo_' + element.id).append('<td><a target="_blank" href="/pos/ticket/' + element.id + '">' + element.codigo + '</a></td>');
+                $('#articulo_' + element.id).append('<td>' + element.no_productos_vendidos + '</td>');
+                $('#articulo_' + element.id).append('<td>' + element.no_articulos_vendidos + '</td>');
+                $('#articulo_' + element.id).append('<td> $ ' + element.total_con_impuesto + '</td>');
+                element = null;
             }
-        });
-    }
-    $(function() {
 
-        $.datepicker.regional['es'] = {
-            closeText: 'OK',
-            prevText: '<Ant',
-            nextText: 'Sig>',
-            currentText: 'Hoy',
-            monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-            monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-            dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-            dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
-            dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
-            weekHeader: 'Sm',
-            //dateFormat: 'dd/mm/yy',
-            firstDay: 1,
-            isRTL: false,
-            yearSuffix: ''
-        };
-        $.datepicker.setDefaults($.datepicker.regional['es']);
-        
-        
-        $(".datepicker").datepicker({
-            changeMonth: true,
-            changeYear: true,
-            maxDate: new Date({{'now'|date('Y')}}, {{'now'|date('m')}} - 1, 1), 
-            minDate: new Date({{min|date('Y')}}, {{min|date('m')}} - 1, 1), 
-            showButtonPanel: true,
-            dateFormat: 'MM/yy',
-            onSelect: function() {
-                var date = $(".datepicker").datepicker("getDate");
-                var day = date.getDate();
-                var month = (date.getMonth()) + 1;
-                var year = date.getFullYear();
-                //Obtener tienda
-                var idtienda = $('#tiendas_id').val();
-                diaDe(day, month, year, idtienda);
-                $('.dia').html(day + ' / ' + month + ' / ' + year);
-            },
-            onClose: function(dateText, inst) { 
-            var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
-            var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
-            $(this).datepicker('setDate', new Date(year, month, 1));
         }
-        });
-    });
+        function diaDe(day, month, year, tienda)
+        {
+            var tienda = typeof tienda !== 'undefined' ? tienda : 0;
+            $.ajax({
+                data: {
+                    'tienda': tienda,
+                    'day': day,
+                    'month': month,
+                    'year': year
+                },
+                url: '{{path('reporte_dia_d')}}',
+                type: 'POST',
+                //timeout: 20,
+                beforeSend: function() {
 
-    function getTienda() {
-        var e = document.getElementById("tiendas_id");
-        var nombretienda = e.options[e.selectedIndex].text;
-        $('#select_tienda').html(nombretienda);
-    }
+                },
+                success: function(response) {
+                    // los artículos nos lo regresa en formato JSON,
+                    // procedemos a convertirlo en un objeto
+                    //var json = response;
+                    //alert(response);
+                    var obj = JSON.parse(response);
+                    //alert(obj);
+                    venta(obj);
+
+                },
+                fail: function(e, x) {
+                    // si falla algo en la función lanzamos un alert
+                    alert('Upss, tenemos un problema.');
+                }
+            });
+        }
+        $(function() {
+
+            $.datepicker.regional['es'] = {
+                closeText: 'OK',
+                prevText: '<Ant',
+                nextText: 'Sig>',
+                currentText: 'Hoy',
+                monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
+                dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+                weekHeader: 'Sm',
+                //dateFormat: 'dd/mm/yy',
+                firstDay: 1,
+                isRTL: false,
+                yearSuffix: ''
+            };
+            $.datepicker.setDefaults($.datepicker.regional['es']);
+
+
+            $(".datepicker").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                maxDate: new Date({{'now'|date('Y')}}, {{'now'|date('m')}} - 1, 1),
+                minDate: new Date({{min|date('Y')}}, {{min|date('m')}} - 1, 1),
+                showButtonPanel: true,
+                dateFormat: 'MM/yy',
+                onSelect: function() {
+                    var date = $(".datepicker").datepicker("getDate");
+                    var day = date.getDate();
+                    var month = (date.getMonth()) + 1;
+                    var year = date.getFullYear();
+                    //Obtener tienda
+                    var idtienda = $('#tiendas_id').val();
+                    diaDe(day, month, year, idtienda);
+                    $('.dia').html(day + ' / ' + month + ' / ' + year);
+                },
+                onClose: function(dateText, inst) {
+                    var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+                    var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+                    $(this).datepicker('setDate', new Date(year, month, 1));
+                    
+                    
+                    // pedir ajax
+                    
+                }
+            });
+        });
+
+        function getTienda() {
+            var e = document.getElementById("tiendas_id");
+            var nombretienda = e.options[e.selectedIndex].text;
+            $('#select_tienda').html(nombretienda);
+        }
     </script>
 
 
@@ -156,11 +160,12 @@
 
     <section class="content dark container clearfix">
         <div class="span12">
+            <h2>Reporte de <span class="meta" id="select_tienda">Todas las tiendas</span></h2>
+        </div>
+        <div class="span12">
             <h2> Total vendido en el mes : <span class="meta" id="total_vendido">$ 123321 </span></h2>
         </div>
         <br />
-        <br />
-    {#<div id="chart_div" style="width: 80%; height: 350px;"></div>#}
     </section>
 
 

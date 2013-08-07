@@ -1,7 +1,106 @@
-{% extends "::base.html.twig" %}
+{% extends "QPvBundle::template.html.twig" %}
+{% block title %}Aviso de Privacidad{% endblock %}
+{% block content %}
+<h1>Aviso de privacidad.</h1>
 
-{% block title %}QPvBundle:Info:privacy{% endblock %}
+<style type="text/css">
+        #contenido
+        {
+            margin-left: auto;
+            margin-right: auto;
+            width: 85%;
+            text-align: justify;
+        }
+        #contenido p
+        {
+            margin-top: 20px;
+        }
+        #contenido p:first-letter
+        {
+            font-size: 1.5em;
+        }
+        #contenido ul
+        {
+            margin-top: 10px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 85%;
+            list-style: circle;
+        }
+        #contenido ul li
+        {
+            margin-top: 10px;
+        }
+</style>
 
-{% block body %}
-<h1>Welcome at the Info:privacy page</h1>
+<div id="contenido">
+
+    <p>
+        En términos de lo previsto en la Ley Federal de Protección de Datos Personales en Posesión de los particulares, denominada “la Ley” en lo sucesivo, EMPRESA S.A, con dirección en Calle Ayuntamiento No 20, Local H, Colonia Atizapán Centro, Atizapán estado de México, establece el presente aviso de Privacidad conforme a lo siguiente:
+    </p>
+
+    <p>
+        El presente documento tiene finalidad la protección de los datos personales de los sujetos registrados en el sistema WPV.COM en lo sucesivo llamados USUARIO, y establecer que los datos mediante su tratamiento legítimo controlado por la EMPRESA S.A., garantizará los derechos del USUARIO de acuerdo a la Ley.
+    </p>
+
+    <p>
+        La EMPRESA S.A. recopilará información necesaria para su correcta operación y el alcance de sus fines. Los datos personales solicitados al USUARIO son los siguientes:
+
+
+    </p>
+
+    <ul>
+        <li>Nombre y Apellidos.</li>
+        <li>Genero.</li>
+        <li>Dirección.</li>
+        <li>Dirección de correo electrónico.</li>
+        <li>Teléfono Local y móvil.</li>
+        <li>Nombre de su Empresa o Razón Social</li>
+    </ul>
+
+    <p>
+        Además de solicitar información que detalle el giro del negocio del USUARIO. La EMPRESA S.A. pude llegar a solicitar información sensible como Números de Tarjetas de Crédito, y Contraseñas para la manipulación del sistema, datos que serán tratados mediante técnicas de encriptación que ofrezcan mayor seguridad al USUARIO.
+    </p>
+
+    <p>
+        Así mismo la EMPRESA S.A. puede utilizar la información correspondiente del flujo de las operaciones realizadas por el USUARIO, como ventas y compras, así como la información involucrada en la operación que detallen al servicio, al producto, los metadatos, lugar y fecha de dichas operaciones.
+    </p>
+
+
+    <p>
+        El USUARIO al proporcionar los datos personales a la EMPRESA S.A. acepta y autoriza que los datos formarán parte de nuestra base de datos y que serán tratados bajo alguna o algunas de las siguientes finalidades:
+    </p>
+
+
+    <ul>
+        <li>Realizar estudios sobre datos demográficos, intereses y comportamiento; estudios de mercado y de consumo a efecto de adquirir y ofrecer productos y servicios personalizados, así como publicidad y contenidos más adecuados a las necesidades del USUARIO.</li>
+        <li>Con el objeto de poder entregar productos, servicios y soluciones, la EMPRESA S.A. y sus encargados han celebrado o celebrarán diversos acuerdos comerciales con diversos proveedores tanto en territorio nacional como en el extranjero, para que le suministren los productos y servicios ofrecidos por el EMPRESA S.A., en el entendido de que dichos proveedores están obligados, a mantener la confidencialidad de los datos personales suministrados y a observar el Aviso de Privacidad.</li>
+    </ul>
+    
+
+    <p>
+        En ningún momento y bajo ninguna circunstancia EMPRESA S.A. podrá divulgar, revelar o de cualquier otra manera hacer conocimiento de cualquier tercero, con el cual no se halla celebrado algún acuerdo, de la información confidencial que provee el USUARIO a menos que por Ley, se marque lo contrario.
+    </p>
+    
+
+    <p>
+        El USUARIO puede exigir en cualquier momento el cumplimiento de sus derechos ARCO de acuerdo a lo estipulado en la Ley y bajo las restricciones mencionadas en la misma. Dirigiéndose a las instalaciones de EMPRESA S.A ubicadas en la dirección mencionada al principio de este documento o a los siguientes medios:
+    </p>
+
+    <ul>
+        <li>Teléfono: +52 55 1111-1111</li>
+        <li>Correo electrónico: soporteprivacidad@empresasa.com</li>
+    </ul>
+    
+    
+    <p>
+        El área interna de la EMPRESA S.A. responsable del tratamiento de los datos personales de USUARIO, está obligada a cumplir con los principios de licitud, consentimiento, información, finalidad, y responsabilidad tutelados en la Ley, por tal motivo EMPRESA S.A. se compromete a mantener las medidas de seguridad tanto administrativas como físicas que permitan protegerlos contra cualquier daño, alteración o acceso no autorizado.
+    </p>
+    
+    <p>
+        La empresa EMPRESA S.A se reserva el derecho de actualizar periódicamente el Aviso en cuyos casos el USUARIO registrado será notificado y al mismo tiempo el USUARIO debe asumir su responsabilidad de revisar el contenido del Aviso periódicamente.
+    </p>
+    
+
+</div>
 {% endblock %}

@@ -1,11 +1,12 @@
 {% extends "QPvBundle::template.html.twig" %}
-
+{% block title %}Tienda - Nueva{% endblock %}
 {% block content %}
     
     <h1>Nueva Tienda</h1>
 
     
     <form action="{{ path('tienda_create') }}" method="post" {{ form_enctype(form) }}>
+        {% form_theme form 'QPvBundle:Error:error_field.html.twig'%}
         {{ form_widget(form, {'attr' : {'class' : 'form_new'}}) }}
         <p>
             <button class="fsbutton_ok" type="submit"> Ok </button>

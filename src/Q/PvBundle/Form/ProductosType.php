@@ -8,6 +8,9 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\CallbackValidator;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormError;
+
+
+//  Validadores
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Range;
@@ -20,6 +23,8 @@ class ProductosType extends AbstractType
     private $impuestos;
     private $almacenes;
 
+    
+    
     public function __construct($data)
     {
         $this->impuestos = $data['impuestos'];
@@ -42,13 +47,15 @@ class ProductosType extends AbstractType
         
         $builder
                 
+                
+                
+                // - - - - - - - - - - - - - - - - - - - - - -  Código de barras
                 ->add('codigo_de_barras', 'text', array(
                     'label' => 'Código de barras:',
+                    'required' => false,
                     'attr' => array(
                         'placeholder' => 'Si no tienes escáner, déjalo vacío'
                     ),
-                    
-                    
                     'constraints' => array(
                         new Length(array(
                             'min' => 0,
@@ -61,16 +68,20 @@ class ProductosType extends AbstractType
                             'pattern' => '/^[a-zA-Z0-9]*$/',
                                 )),
                     ),
-                    'required' => false,
+                    
                 ))
+                
+                
+                
                 // - - - - - - - - - - - - - - - - - - - - - - - - - - - Almacen
                 ->add('almacen_id', 'choice', array(
-                    //'mapped' => false,
                     'label' => 'Almacén',
-                    'choices' => $almacenes,
                     'required' => true,
+                    'choices' => $almacenes,
                 ))
 
+                
+                
                 // - - - - - - - - - - - - - - - - - - - - - - - - - - -Impuesto
                 ->add('impuesto_id', 'choice', array(
                     //'mapped' => false,
@@ -82,6 +93,10 @@ class ProductosType extends AbstractType
                          * @todo Selecionar almacen seleccionado anteriormente
                          */
                 ))
+                
+                
+                
+                // - - - - - - - - - - - - - - - - - - - - - - - - - - -  Nombre
                 ->add('nombre', 'text', array(
                     'label' => 'Nombre:',
                     'attr' => array(
@@ -97,6 +112,10 @@ class ProductosType extends AbstractType
                                 )),
                     ),
                 ))
+                
+                
+                
+                // - - - - - - - - - - - - - - - - - - - - - - - - - Descripcion
                 ->add('descripcion', 'textarea', array(
                     'label' => 'Descripción:',
                     'required' => false,
@@ -104,6 +123,11 @@ class ProductosType extends AbstractType
                         'placeholder' => 'Describe tu producto'
                     ),
                 ))
+                
+                
+                
+                
+                // - - - - - - - - - - - - - - - - - - - - - - -Precio de compra
                 ->add('precio_compra', 'number', array(
                     'label' => 'Precio de compra:',
                     'attr' => array(
@@ -119,6 +143,10 @@ class ProductosType extends AbstractType
                                 )),
                     ),
                 ))
+                
+                
+                
+                // - - - - - - - - - - - - - - - - - - - - - - - Precio de venta
                 ->add('precio_venta', 'number', array(
                     'label' => 'Precio de venta:',
                     'attr' => array(
@@ -134,10 +162,11 @@ class ProductosType extends AbstractType
                                 )),
                     ),
                 ))
+                // - - - - - - - - - - - - - - - - - - - - - -Precio de mayoreo
                 ->add('precio_mayoreo', 'number', array(
                     'label' => 'Precio de Mayoreo:',
                     'attr' => array(
-                        'placeholder' => 'Precio de mayoreo'
+                        'placeholder' => 'Precio de mayoreo, si no manejas pon el mismo precio de venta'
                     ),
                     'precision' => 2,
                     'rounding_mode' => $roundup,
@@ -149,6 +178,7 @@ class ProductosType extends AbstractType
                                 )),
                     ),
                 ))
+                // - - - - - - - - - - - - - - - - - - - - - Cantidad de mayoreo
                 ->add('cantidad_mayoreo', 'number', array(
                     'label' => 'Cantidad Mayoreo:',
                     'attr' => array(
@@ -164,6 +194,7 @@ class ProductosType extends AbstractType
                                 )),
                     ),
                 ))
+                // - - - - - - - - - - - - - - - - - - - - - - - Cantidad minima
                 ->add('cantidad_minima', 'number', array(
                     'label' => 'Cantidad Mínima',
                     'attr' => array(
@@ -179,10 +210,11 @@ class ProductosType extends AbstractType
                                 )),
                     ),
                 ))
+                // - - - - - - - - - - - - - - - - - - - - - - - Cantidad actual
                 ->add('cantidad_actual', 'number', array(
                     'label' => 'Cantidad Actual',
                     'attr' => array(
-                        'placeholder' => 'Las unidades que hay dentro del almacén'
+                        'placeholder' => 'Las cantidad que hay en almacén'
                     ),
                     'precision' => 2,
                     'rounding_mode' => $roundup,
@@ -194,6 +226,7 @@ class ProductosType extends AbstractType
                                 )),
                     ),
                 ))
+                // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - SKU
                 ->add('sku','text',array(
                     'label' => 'SKU:',
                     'attr' => array(
@@ -202,10 +235,12 @@ class ProductosType extends AbstractType
                     'required' => false,
                 ))
 
-                // 
+                 
                 // ->add('codigo_proveedor')
                 //->add('codigo_venta')
                 //->add('codigo_compra')
+                
+                // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - SKU
                 ->add('disponible', 'choice', array(
                     'attr' => array(
                         'class' => 'choice'
@@ -220,13 +255,15 @@ class ProductosType extends AbstractType
                     'required' => true,
                     'data' => 1,
                 ))
+                
+                // - - - - - - - - - - - - - - - - - - - - - - - - - - - -Imagen
                 ->add('imagen', 'file', array(
                     'mapped' => false,
                     'required' => false,
                     'constraints' => array(
                         new File(array(
                             'maxSize' => '2M',
-                            'maxSizeMessage' => 'Máximo 2Megas',
+                            'maxSizeMessage' => 'Máximo 2 MBs',
                             'notReadableMessage' => 'No se puede leer tu archivo',
                                 )),
                         new Image(array(

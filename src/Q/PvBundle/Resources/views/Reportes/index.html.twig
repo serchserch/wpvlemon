@@ -1,5 +1,5 @@
 {% extends "QPvBundle::template.html.twig" %}
-
+{% block title %}Reportes - Hoy{% endblock %}
 {% block content %}
 <h1>Hoy : {{"now"|date('d  / m / Y')}}</h1>
 {% include 'QPvBundle:Reportes:menu.html.twig'%}
@@ -65,8 +65,6 @@
         <tr>
             <th>Fecha</th>
             <th>Ver Ticket</th>
-           
-            
             <th>Artículos Diferentes</th>
             <th>Total de artículos</th>
             <th>Total Venta</th>

@@ -1,5 +1,6 @@
 {% extends "QPvBundle::template.html.twig" %}
 
+{% block title %}Bienvenido {{app.user.nombre}}{% endblock %}
 {# Posibles errores de los usuarios #}
 {% set no_tienda = 'Todavía no puedes hacer esto. Necesitas crear al menos una tienda.'%}
 {% set no_impuestos = 'Todavía no puedes hacer esto. Necesitas crear al menos un impuesto.'%}

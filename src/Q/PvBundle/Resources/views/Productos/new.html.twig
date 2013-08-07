@@ -1,9 +1,10 @@
 {% extends "QPvBundle::template.html.twig" %}
-
+{% block title %}Prodcutos - Nuevo{% endblock %}
 {% block content %}
     <h1>Nuevo producto</h1>
 
     <form action="{{ path('productos_create') }}" method="post" {{ form_enctype(form) }}>
+        {% form_theme form 'QPvBundle:Error:error_field.html.twig'%}
         {{ form_widget(form, {'attr' : {'class' : 'form_new'}}) }}
         <p>
             <button class="fsbutton_ok" type="submit">Ok</button>

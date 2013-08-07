@@ -20,6 +20,7 @@ class ImpuestoType extends AbstractType
                 'attr' => array(
                     'value' => '16',
                 ),
+                'invalid_message' => 'Solo numeros'
             ))
             //->add('fechaCreacion')
             //->add('fechaModificacion')

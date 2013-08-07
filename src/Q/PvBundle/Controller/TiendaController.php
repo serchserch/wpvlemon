@@ -135,7 +135,8 @@ class TiendaController extends Controller
         $entity = $em->getRepository('QPvBundle:Tienda')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Tienda entity.');
+            return $this->redirect($this->generateUrl('index_page'));
+            //throw $this->createNotFoundException('Unable to find Tienda entity.');
         }
 
         $editForm = $this->createForm(new TiendaType(), $entity);

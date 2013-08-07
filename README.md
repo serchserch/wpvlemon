@@ -8,6 +8,6 @@ Creado con Symfony Standard Edition
 Autores:
 --------
 
-Isaac [** Limón**]
-Sergio [** Páramo **]
-Karen [** De La Luz**]
+  * [** Isaac Limón**]
+  * [** Sergio Morlán **]
+  * [** De La Luz**]

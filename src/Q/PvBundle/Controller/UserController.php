@@ -38,30 +38,9 @@ class UserController extends Controller
     }
     
     
-    
 
     /**
-     * Lists all User entities.
-     *
-     * @Route("/", name="u")
-     * @Method("GET")
-     * @Template()
-     */
-    public function indexAction()
-    {
-        
-        $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('QPvBundle:User')->findAll();
-
-//        return array(
-//            'entities' => $entities,
-//        );
-        return $this->redirect($this->generateUrl('index_page'));
-    }
-
-    /**
-     * Creates a new User entity.
+     * Registra un nuevo usuario
      *
      * @Route("/", name="u_create")
      * @Method("POST")
@@ -98,7 +77,7 @@ class UserController extends Controller
     }
 
     /**
-     * Displays a form to create a new User entity.
+     * Muestra el formulario de registro de usuario
      *
      * @Route("/new", name="u_new")
      * @Method("GET")
@@ -106,6 +85,15 @@ class UserController extends Controller
      */
     public function newAction()
     {
+        
+        /**
+         * @todo Cobro al cliente, api paypal
+         */
+        
+        if ($this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirect($this->generateUrl('panel_index'));
+        }
+        
         $entity = new User();
         $form = $this->createForm(new UserType(true), $entity);
 
@@ -116,32 +104,8 @@ class UserController extends Controller
     }
 
     /**
-     * Finds and displays a User entity.
-     *
-     * @Route("/{id}", name="u_show")
-     * @Method("GET")
-     * @Template()
-     */
-    public function showAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('QPvBundle:User')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find User entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity' => $entity,
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-
-    /**
-     * Displays a form to edit an existing User entity.
+     * Muestra el formulario de edición del usuario.
+     * No muestra los datos no modificables.
      *
      * @Route("/e/", name="u_edit")
      * @Secure(roles="IS_AUTHENTICATED_FULLY")
@@ -172,7 +136,7 @@ class UserController extends Controller
     }
 
     /**
-     * Edits an existing User entity.
+     * Edita un usuario
      *
      * @Route("/{id}", name="u_update")
      * @Method("PUT")
@@ -198,6 +162,8 @@ class UserController extends Controller
             if ($currentpass != $entity->getPassword()){
                 $this->securePassword($entity);
             }
+            
+            $entity->setFechaModificacion(new \DateTime('now'));
             $em->persist($entity);
             $em->flush();
             return $this->redirect($this->generateUrl('u_edit',array('m' => true)));

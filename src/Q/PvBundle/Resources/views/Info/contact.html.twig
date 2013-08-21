@@ -1,7 +1,9 @@
-{% extends "::base.html.twig" %}
+{% extends "QPvBundle::template.html.twig" %}
 
-{% block title %}QPvBundle:Info:contact{% endblock %}
+{% block title %} Contacto {% endblock %}
 
-{% block body %}
-<h1>Welcome at the Info:contact page</h1>
+{% block content %}
+
+{% include 'QPvBundle::contacto.html.twig'%}
+
 {% endblock %}

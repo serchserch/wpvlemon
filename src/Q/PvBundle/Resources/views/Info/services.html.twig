@@ -1,55 +1,66 @@
 {% extends "QPvBundle::template.html.twig" %}
-
 {% block content %}
+
+{% include 'QPvBundle::fancybox.html.twig'%}
+<style type="text/css">
+        .fan{width:750px;display: none;}
+        .fan p{ width: 55%; text-align: justify; float: left; margin-left: 30px;}
+        .fan img{ width: 30%; height: auto; float: right;}
+        .fan p:first-letter{font-weight: bold; font-size: 1.5em; }
+</style>
 <div id="content_main" style="min-height: 500px;">
     <section class="content dark container clearfix">
         <div class="span12">
             <h2>Nuestros  <span class="meta">Servicios</span></h2>
         </div>
         <div class="services clearfix"> 
-
-            <!-- item 1 -->
             <div class="span6">
                 <div class="item">
-                    <div class="square"><a href="services.html"><img src="/img/icons/webdesign.png" alt="" /></a></div>
-                    <h3><a href="services.html">Punto de venta</a></h3>
-                    <p> Una terminal punto de venta en tu navegador. </p>
+                    <div class="square"><a href="#servicios_pos" title="Servicio WEB" class="fancybox"><img src="/img/icons/webdesign.png" alt="" /></a></div>
+                    <h3><a href="#servicios_pos" title="Servicio WEB" class="fancybox">Servicio WEB</a></h3>
+                    <p> Servicio WEB; olvidate del mantenimiento. Todo en un solo pago</p>
                 </div>
             </div>
-            <!-- End --> 
-
-            <!-- item 2 -->
             <div class="span6">
                 <div class="item">
-                    <div class="square"><a href="services.html"><img src="/img/icons/branding.png" alt="" /></a></div>
-                    <h3><a href="services.html">Presencia Web</a></h3>
+                    <div class="square"><a href="#servicios_web" class="fancybox" title="Presencia WEB"><img src="/img/icons/branding.png" alt="" /></a></div>
+                    <h3><a href="#servicios_web" class="fancybox" title="Presencia WEB">Presencia Web</a></h3>
                     <p> Le damos a tu negocio precencia web. Así tus clientes estarán mas cerca. </p>
                 </div>
             </div>
-            <!-- End --> 
-
-            <!-- item 3 -->
             <div class="span6">
                 <div class="item ">
-                    <div class="square"><a href="services.html"><img src="/img/icons/wordpress.png" alt="" /></a></div>
-                    <h3><a href="services.html">Control Total</a></h3>
-                    <p> Inventarios, almacenes, trabajadores, horarios, tiendas, de todo. </p>
+                    <div class="square"><a href="#servicios_rep" class="fancybox" title="Reportes"><img src="/img/icons/strategy.png" alt="" /></a></div>
+                    <h3><a href="#servicios_rep" class="fancybox" title="Reportes">Reportes</a></h3>
+                    <p> Reportes de ventas diarios, semanales, mensuales; por tienda, por almacén. . .</p>
                 </div>
             </div>
-            <!-- End --> 
-
-            <!-- item 4 -->
-            <div class="span6">
-                <div class="item ">
-                    <div class="square"><a href="services.html"><img src="/img/icons/strategy.png" alt="" /></a></div>
-                    <h3><a href="services.html">Precios</a></h3>
-                    <p> Todo lo anterior por el mismo precio. ¿Que esperas? , registrate ya.</p>
-                </div>
-            </div>
-            <!-- End --> 
-
         </div>
-        <!-- End Services --> 
     </section>
 </div>
+
+
+<div id="servicios_pos" class="fan">
+    <h2>Servicio</h2>
+    <img src="/img/server.jpg" />
+    <p>Ya que es un Software en la nube, usted no tendrá que preocuparse por darle mantenimiento (ni pagarle a alguien por ello), siempre tendrá la última versión.</p>
+    <p>Podrá acceder desde cualquier dispositivo, sus datos estarán centralizados y podrá visualizarlos en cualquier momento y desde cualquier lugar. </p>
+    <p>Además no tendrá que instalar nada en su equipo, todo el sistema funciona a base del navegador web. El sistema es multiplataforma, funciona en cualquier sistema operativo, incluso se puede usar en tablets.</p>
+</div>
+
+<div id="servicios_web" class="fan">
+    <h2>Presencia web</h2>
+    <img src="/img/mapa.jpg" />
+    <p>Le damos presencia web a tus tiendas, así tus clientes sabrán que estas allí.</p>
+    <br />
+    <p>Próximamente tu tienda en línea. (por el mismo precio)</p>
+</div>
+
+<div id="servicios_rep" class="fan">
+    <h2>Todo tipo de reportes</h2>
+    <img src="/img/stats.jpg" />
+    <p>Para un mejor control te ofrecemos diferentes tipos de reportes: por día, por semana, por mes, por  año, por producto... en fin. Todo en la misma plataforma</p>
+    <p>Así podrás tomar una mejor decisión en el futuro de tu negocio</p>
+</div>
+
 {% endblock %}
